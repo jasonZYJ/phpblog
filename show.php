@@ -16,8 +16,8 @@
     $post = mysql_fetch_object($query);
   ?>
 
-  <h1><?php print $post->id ?></h1>
-  <p><?php print $post->body ?></p>
+  <h1><?php echo $post->id; ?> : <?php echo $post->title; ?>  </h1>
+  <p><?php echo $post->body; ?></p>
 
 </body>
 </html>
