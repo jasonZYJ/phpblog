@@ -9,6 +9,9 @@ $sql = "update posts set title = '{$_POST['title']}', body = '{$_POST['body']}' 
 if (!mysql_query($sql)) {
 	echo mysql_error();	
 	echo '<br>' .  $sql;
+}else{
+	header("HTTP/1.1 301 Moved Permanently");
+	header("Location: $dest"); 
 };
 
 
