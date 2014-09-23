@@ -18,22 +18,22 @@
     </thead>
     <tbody>
       <?php 
-        $posts = Array(
-            Array('id'=>'1','title'=>'第1篇帖子','created_at'=>'2012-1-1  21:07:57'),
-            Array('id'=>'2','title'=>'第2篇帖子','created_at'=>'2012-2-2  21:07:57'),
-            Array('id'=>'3','title'=>'第3篇帖子','created_at'=>'2012-3-3  21:07:57')
-          );
 
-        foreach ($posts as $post) {
+        require_once './inc/db.php';
+
+        $sql = 'select * from posts';
+        $query = mysql_query($sql);
+        while ( $post = mysql_fetch_object($query)) {
+          
       ?>
 
           <tr>
-            <td><?php echo $post['id']; ?></td>
-            <td><a href="show.php?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?></a></td>
-            <td><?php echo $post['created_at']; ?></td> 
+            <td><?php echo $post->id; ?></td>
+            <td><a href="show.php?id=<?php print $post->id; ?>"><?php echo $post->title; ?></a></td>
+            <td><?php echo $post->created_at; ?></td> 
             <td> 
-              <a href="edit.php?id=<?php echo $post['id']; ?>">改</a> 
-              <a href="delete.php?id=<?php echo $post['id']; ?>">删</a> 
+              <a href="edit.php?id=<?php echo $post->id; ?>">改</a> 
+              <a href="delete.php?id=<?php echo $post->id; ?>">删</a> 
             </td>        
           </tr> 
  
