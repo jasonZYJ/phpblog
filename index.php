@@ -30,7 +30,7 @@
           <tr>
             <td><?php echo $post->id; ?></td>
             <td><a href="show.php?id=<?php print $post->id; ?>"><?php echo $post->title; ?></a></td>
-            <td><?php echo $post->created_at; ?></td> 
+            <td><?php echo date('Y-m-d',strtotime($post->created_at));?></td>
             <td> 
               <a href="edit.php?id=<?php echo $post->id; ?>">改</a> 
               <a href="delete.php?id=<?php echo $post->id; ?>">删</a> 
