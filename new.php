@@ -7,7 +7,7 @@
 <body>
 <h1>New post</h1>
 
-<form action="" method="post">
+<form action="save.php" method="post">
 	<label for="title">title</label>
 	<input type="text" name="title" value="" />
 	<br/>
