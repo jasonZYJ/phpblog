@@ -1,17 +1,14 @@
 <?php 
 
-mysql_connect('localhost','demo','demo') or die('can`t work');
-mysql_query("SET NAMES utf8");    
-mysql_select_db('phpdemo');
-
+require_once './inc/db.php';
+require_once './inc/common.php';
 $id = $_POST['id'];
 $sql = "update posts set title = '{$_POST['title']}', body = '{$_POST['body']}' where id = {$_POST['id']};" ;	
 if (!mysql_query($sql)) {
 	echo mysql_error();	
 	echo '<br>' .  $sql;
 }else{
-	header("HTTP/1.1 301 Moved Permanently");
-	header("Location: $dest"); 
+	redirect_to("show.php?id={$id}");
 };
 
 
