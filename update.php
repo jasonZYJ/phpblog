@@ -3,10 +3,14 @@
 require_once './inc/db.php';
 require_once './inc/common.php';
 $id = $_POST['id'];
-$sql = "update posts set title = '{$_POST['title']}', body = '{$_POST['body']}' where id = {$_POST['id']};" ;	
-if (!mysql_query($sql)) {
-	echo mysql_error();	
-	echo '<br>' .  $sql;
+$sql = "update posts set title = :title, body = :body where id = :id;" ;	
+$query = $db->prepare($sql);
+$query->bindValue(':title',$_POST['title'],PDO::PARAM_STR);
+$query->bindValue(':body',$_POST['body'],PDO::PARAM_STR);
+echo $query->bindValue(':id',$id,PDO::PARAM_INT);
+
+if (!$query->execute()) {	
+	print_r($query->errorInfo());
 }else{
 	redirect_to("show.php?id={$id}");
 };

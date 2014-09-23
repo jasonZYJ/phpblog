@@ -6,12 +6,12 @@
 </head>
 <body>
   <?php        
-    require_once './inc/db.php';
+    require_once './inc/db.php';    
     
-    $id = $_GET['id'] ;
-    $sql = 'select * from posts where id = ' . $id;
-    $query = mysql_query($sql);
-    $post = mysql_fetch_object($query);
+    $query = $db->prepare('select * from posts where id = :id');
+    $query->bindValue(':id',$_GET['id'],PDO::PARAM_INT);
+    $query->execute();
+    $post = $query->fetchObject();    
   ?>
 
   <h1><?php echo $post->id; ?> : <?php echo $post->title; ?>  </h1>

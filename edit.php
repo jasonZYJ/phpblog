@@ -6,13 +6,12 @@
 </head>
 <body>
 	<?php 
-	    mysql_connect('localhost','demo','demo') or die('can`t work');
-	    mysql_query("SET NAMES utf8");    
-	    mysql_select_db('phpdemo');
-
-		$id = $_GET['id'];	 
-		$query = mysql_query("select * from posts where id = {$id}");
-		$post = mysql_fetch_object($query);
+		require_once './inc/db.php';
+		$id = $_GET['id'];
+	    $query = $db->prepare('select * from posts where id = :id');
+	    $query->bindValue(':id',$id,PDO::PARAM_INT);
+	    $query->execute();
+	    $post = $query->fetchObject();    		
 	?>
 	<h1>edit post:</h1>
 

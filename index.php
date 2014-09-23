@@ -20,13 +20,11 @@
       <?php 
 
         require_once './inc/db.php';
-
-        $sql = 'select * from posts';
-        $query = mysql_query($sql);
-        while ( $post = mysql_fetch_object($query)) {
+        
+        $query = $db->query('select * from posts');
+        while ( $post =  $query->fetchObject() ) {
           
       ?>
-
           <tr>
             <td><?php echo $post->id; ?></td>
             <td><a href="show.php?id=<?php print $post->id; ?>"><?php echo $post->title; ?></a></td>
