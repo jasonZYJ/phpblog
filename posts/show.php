@@ -6,7 +6,7 @@
 </head>
 <body>
   <?php        
-    require_once './inc/db.php';    
+    require_once '../inc/db.php';    
     
     $query = $db->prepare('select * from posts where id = :id');
     $query->bindValue(':id',$_GET['id'],PDO::PARAM_INT);

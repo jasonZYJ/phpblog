@@ -1,7 +1,7 @@
 <?php 
 
-require_once './inc/db.php';
-require_once './inc/common.php';
+require_once '../inc/db.php';
+require_once '../inc/common.php';
 $id = $_POST['id'];
 $sql = "update posts set title = :title, body = :body where id = :id;" ;	
 $query = $db->prepare($sql);

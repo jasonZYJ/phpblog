@@ -1,7 +1,7 @@
 <?php 
 
-require_once './inc/db.php';
-require_once './inc/common.php';
+require_once '../inc/db.php';
+require_once '../inc/common.php';
 
 $sql = "insert into posts(title,body,created_at) values(:title, :body,:created_at);" ;	
 $query = $db->prepare($sql);
