@@ -1,5 +1,8 @@
-<?php 
-require_once './inc/common.php';
-redirect_to('posts/');
+<html>
+<head>
+	<meta http-equiv="refresh" content="0; url=/posts" />
+</head>
+<body>
 
- ?>
+</body>
+</html>
