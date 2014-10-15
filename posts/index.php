@@ -4,7 +4,10 @@ require_once '../inc/db.php';
 
 require_once '../inc/pager.php';
 
-$query = pager_query('select * from posts ',$nav_html,$_GET['page']);
+$pager = new Pager('select * from posts ');
+$query = $pager->query($_GET['page']);
+//$pager2 = new Pager('select * from users ',2,'page2');
+//$query2 = $pager2->query($_GET['page2']);
 ?>
 <!doctype html>
 <html>
@@ -45,7 +48,7 @@ $query = pager_query('select * from posts ',$nav_html,$_GET['page']);
   </table>
   <a href="new.php">新增</a>
 
-  <?php echo $nav_html; ?> 
+  <?php echo $pager->nav_html(); ?> 
 </body>
 </html>
 

@@ -1,65 +1,89 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/db.php' ;
+/**
+* 
+*/
+class PAger{
+	public $page_size,$page_holder;
+	public $page_start,$page_last,$page_current,$page_previous,$page_next;
+	public $sql;
 
-function pager_query($sql,&$nav_html,$page_current=1, $page_size=2){
-	//全局变量与局部变量的区别
-	global $db;
-	$sql_amount = 'select count(*) as amount  ' . substr($sql, strpos($sql,'from' ) ) ;
-	//计算总记录数
-	$row_amount = $db->query($sql_amount)->fetchObject()->amount;
-	        
-	//计算总页数	
-	$page_amount = ceil($row_amount / $page_size);
+	function __construct($sql,$page_size=2,$page_holder='page'){
+		//全局变量与局部变量的区别
+		global $db;
 
-	//当未指定页号，或者页号错误时	
-	if (empty($page_current) || $page_current < 1) $page_current = 1;
-	if ($page_current > $page_amount) $page_current = $page_amount;
+		$this->page_start = 1;
+		$this->page_holder = $page_holder;  
+		$this->page_size = $page_size;  
+		$this->sql = $sql;  
 
-	//生成上一页、下一页
-	if($page_current <= 1 )
-	  $page_previous = 1 ;
-	else
-	  $page_previous = $page_current - 1;
+		$sql_amount = 'select count(*) as amount  ' . substr($sql, strpos($sql,'from' ) ) ;
+		//计算总记录数
+		$row_amount = $db->query($sql_amount)->fetchObject()->amount;
 
-	if($page_current >= $page_amount )
-	  $page_next = $page_amount ;
-	else
-	  $page_next = $page_current + 1 ;
+		//计算总页数	
+		$this->page_last = ceil($row_amount / $page_size);
+	}
 
-	//计算返回纪录的起点与记录数
-	$row_base= ($page_current-1) * $page_size;
-	$page_sql = " LIMIT {$page_size} OFFSET {$row_base}";
+	function query($page_current = 1){
+		//全局变量与局部变量的区别
+		global $db;
 
-	$sql = $sql .  $page_sql;
-	//echo $sql;
+		$this->page_current = $page_current ;
+		//当未指定页号，或者页号错误时	
+		if (empty($page_current) || $page_current < 1){
+			$this->page_current = 1;
+		}elseif($page_current > $this->page_last){
+			$this->page_current = $this->page_last;
+		}
 
-	$query_str = "{$_SERVER['SCRIPT_NAME']}?" ;
+		//生成上一页、下一页
+		$this->page_previous = ($this->page_current <= $this->page_start ) ? $this->page_start : $this->page_current - 1 ;
+		$this->page_next = ($this->page_current >= $this->page_last ) ? $this->page_last : $this->page_current + 1 ;
 
-	//as $_GET or $_POST
-	$params = $_REQUEST;
-	$params['page'] = 1;
-	$page_first_q =  $query_str . http_build_query($params);
-	$params['page'] = $page_previous;
-	$page_previous_q = $query_str . http_build_query($params);
-	$params['page'] = $page_next;
-	$page_next_q =  $query_str . http_build_query($params);
-	$params['page'] = $page_amount;
-	$page_last_q =  $query_str . http_build_query($params);
+		//计算返回纪录的起点与记录数
+		$row_base= ($this->page_current-1) * $this->page_size;
+		$page_sql = " LIMIT {$this->page_size} OFFSET {$row_base}";
 
-	$nav_html = <<< EOT
-  <div id="pager"> 
-    <a href="$page_first_q">首页</a>
-    <a href="$page_previous_q">上一页</a>
-    <a href="$page_next_q">下一页</a>    
-    <a href="$page_last_q">末页</a>  
-    <span>当前第$page_current 页</span>
-    <span>总共 $page_amount 页</span> 
-  </div>    
+		$sql = $this->sql .  $page_sql;
+		return $db->query($sql);
+
+	}
+
+	public function nav_html($value=''){
+		$query_str = "{$_SERVER['SCRIPT_NAME']}?" ;
+
+		$arr = [
+			'page_first' =>'page_start',
+			'page_previous'=>'page_previous',
+			'page_next'=>'page_next',
+			'page_last'=>'page_last'
+		];
+		
+		//as $_GET or $_POST
+		$params = $_REQUEST;
+		foreach ($arr as $key => $value) {
+			$params[$this->page_holder] = $this->$value;	
+			$key .= '_q';
+			$$key =  $query_str . http_build_query($params);
+		}
+		
+		
+		return <<< EOT
+	  <div id="pager"> 
+	    <a href="$page_first_q">首页</a>
+	    <a href="$page_previous_q">上一页</a>
+	    <a href="$page_next_q">下一页</a>    
+	    <a href="$page_last_q">末页</a>  
+	    <span>当前第$this->page_current 页</span>
+	    <span>总共 $this->page_last 页</span> 
+	  </div>    
 EOT;
+	}
 
-	return $db->query($sql);
 
-}
+}//end of class
+
 
 
 
