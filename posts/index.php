@@ -2,7 +2,7 @@
 require_once '../inc/session.php';
 require_once '../inc/db.php';
 
-require_once '../inc/pager.php';
+//require_once '../inc/pager.php';
 
 $pager = new Pager('select * from posts ');
 $query = $pager->query($_GET['page']);
