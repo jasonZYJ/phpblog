@@ -1,0 +1,12 @@
+{
+    "name": "afly/phpblog",
+    "require": {
+        "illuminate/database": "~4.2"
+    },
+    "authors": [
+        {
+            "name": "openxyz",
+            "email": "aflymail@gmail.com"
+        }
+    ]
+}

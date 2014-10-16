@@ -11,7 +11,7 @@
 
 
 //Define autoloader
-function __autoload($className) {
+function myautoload($className) {
 	$class_path = __DIR__ . '/' . $className . '.php'; 
 	if (file_exists($class_path )) {
 	  require_once $class_path ;
@@ -19,6 +19,5 @@ function __autoload($className) {
 	}
 	return false;
 }
-
-
+spl_autoload_register('myautoload');
 ?>
