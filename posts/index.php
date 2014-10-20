@@ -1,7 +1,7 @@
 <?php 
 require_once '../inc/common.php';
 require_once '../inc/session.php';
-require_once '../inc/db.php';
+//require_once '../inc/db.php';
 
 //use Illuminate\Database\Capsule\Manager as Capsule;
 //echo Capsule::table('posts')->count();
@@ -9,10 +9,9 @@ require_once '../inc/db.php';
 //echo Post::all()->count();
 //require_once '../inc/pager.php';
 
-//echo PostModel::all()->count();
-
-$pager = new Pager('select * from posts ');
-$query = $pager->query($_GET['page']);
+//pass a eloquent relation
+$pager = new Pager(PostModel::select('*'));
+$posts = $pager->query($_GET['page'])->get();
 //$pager2 = new Pager('select * from users ',2,'page2');
 //$query2 = $pager2->query($_GET['page2']);
 ?>
@@ -37,7 +36,7 @@ $query = $pager->query($_GET['page']);
     </thead>
     <tbody>
       <?php
-        while ( $post =  $query->fetchObject() ) {
+        foreach ($posts as $post) {
       ?>
           <tr>
             <td><?php echo $post->id; ?></td>

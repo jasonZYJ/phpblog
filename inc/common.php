@@ -62,7 +62,6 @@ class autoloader {
     }
 
     public function model($class){
-      echo $class;
       $class_fullname = str_to_underscore($class);
       $class = preg_replace('/_model$/ui','',$class_fullname);
       if ($class != $class_fullname) {
