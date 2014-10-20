@@ -1,7 +1,8 @@
 {
     "name": "afly/phpblog",
     "require": {
-        "illuminate/database": "~4.2"
+        "illuminate/database": "~4.2",
+         "philo/laravel-blade": "2.*"
     },
     "authors": [
         {
