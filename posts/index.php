@@ -3,12 +3,13 @@ require_once '../inc/common.php';
 require_once '../inc/session.php';
 require_once '../inc/db.php';
 
-//require_once '../inc/orm.php';
 //use Illuminate\Database\Capsule\Manager as Capsule;
 //echo Capsule::table('posts')->count();
 //class Post extends Illuminate\Database\Eloquent\Model {}
 //echo Post::all()->count();
 //require_once '../inc/pager.php';
+
+//echo PostModel::all()->count();
 
 $pager = new Pager('select * from posts ');
 $query = $pager->query($_GET['page']);
