@@ -1,11 +1,6 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>首页 - 博客</title>
-</head>
+@extends('layout.master')  
 
-<body>
+@section('content')
   @include('notice')
   @if (is_login())
     <p>欢迎你: {{current_user()->name}}</p>
@@ -44,7 +39,11 @@
   <a href="new.php">新增</a>
 
   {{ $pager->nav_html() }}
-</body>
-</html>
+
+@stop
 
 
+@section('siderbar')
+  @parent
+  <div>here is override</div>
+@stop {{-- or @overwrite --}}
