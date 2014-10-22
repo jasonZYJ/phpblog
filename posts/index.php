@@ -25,8 +25,7 @@ $posts = $pager->query($_GET['page'])->get();
 <body>
   <?php 
     require_once '../inc/blade.php';
-    $name = 'tom';    
-    echo $blade->view()->make('hello',['name'=>$name]);
+    echo $blade->view()->make('notice');
   ?>
   <?php if(is_login()) echo '当前用户: ' . current_user()->name ;?>
   <table border=1>
