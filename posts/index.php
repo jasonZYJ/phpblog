@@ -23,6 +23,11 @@ $posts = $pager->query($_GET['page'])->get();
 </head>
 
 <body>
+  <?php 
+    require_once '../inc/blade.php';
+    $name = 'tom';    
+    echo $blade->view()->make('hello',['name'=>$name]);
+  ?>
   <?php if(is_login()) echo '当前用户: ' . current_user()->name ;?>
   <table border=1>
     <caption><h1>帖子列表</h1></caption>
