@@ -15,6 +15,5 @@ $pager = new Pager(PostModel::select('*'));
 //$pager2 = new Pager('select * from users ',2,'page2');
 //$query2 = $pager2->query($_GET['page2']);
 
-require_once '../inc/blade.php';
-echo $blade->view()->make('post.index',['pager'=>$pager]);
+
 ?>

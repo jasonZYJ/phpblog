@@ -44,7 +44,7 @@ class autoloader {
 
     // 放置公用的工具类，如Pager
     public function library($class){
-      set_include_path(get_include_path().PATH_SEPARATOR . '../library');
+      set_include_path(get_include_path().PATH_SEPARATOR . './library');
       spl_autoload_extensions('.php');
       spl_autoload($class);
     }
@@ -52,10 +52,11 @@ class autoloader {
     public function controller($class){
       $class_fullname = str_to_underscore($class);
       $class = preg_replace('/_controller$/ui','',$class_fullname);
+
       if ($class != $class_fullname) {      
-        $class = preg_replace('/_controller$/ui','',$class);
+        
        
-        set_include_path(get_include_path().PATH_SEPARATOR.'../app/controller/');
+        set_include_path(get_include_path().PATH_SEPARATOR.'./app/controller/');
         spl_autoload_extensions('.controller.php');
         spl_autoload($class);
       }
@@ -65,7 +66,7 @@ class autoloader {
       $class_fullname = str_to_underscore($class);
       $class = preg_replace('/_model$/ui','',$class_fullname);
       if ($class != $class_fullname) {
-        set_include_path(get_include_path().PATH_SEPARATOR . '../app/model/');
+        set_include_path(get_include_path().PATH_SEPARATOR . './app/model/');
         spl_autoload_extensions('.model.php');
         spl_autoload($class);
       }
